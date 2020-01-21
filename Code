@@ -1,0 +1,28 @@
+//栈和递归的实现1：汉诺塔问题，系统将整个程序运行时所需的数据空间安排在一个栈中，函数一层一层调用函数过程中，就在栈顶加空间，“后调用先返回”的弹栈过程
+#include<stdio.h>
+
+move(char x, int n, char z,int *sum) {
+	++*sum;
+	printf("第%d次操作：", *sum);
+	printf("圆盘编号%d，从%c移动到%c\n", n, x, z);
+}
+void Hanoi(int n, char x, char y, char z,int *sum) {
+	if (1 == n)
+		move(x, 1, z,sum);
+	else {
+		Hanoi(n - 1, x, z, y,sum);
+		move(x, n, z,sum);
+		Hanoi(n - 1, y, x, z,sum);
+	}
+}
+
+int main() {
+	char x = 'A';
+	char y = 'B';
+	char z = 'C';
+	int n = 5;
+	int sum=0;
+	printf("请把%c上%d个圆盘按照Hanoi规则借助%c移至%c上!\n", x, n, y, z);
+	Hanoi(n, x, y, z, &sum);
+	printf("完成%d阶Hanoi至少需要%d次操作！", n, sum);
+}
